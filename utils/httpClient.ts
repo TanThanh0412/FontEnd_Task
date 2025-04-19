@@ -1,5 +1,5 @@
 import axios from 'axios';
-const BASE_HOST = "http://localhost:5003/";
+const BASE_HOST = "http://localhost:5001/";
 
 // Create an Axios instance
 const httpClient = axios.create({
