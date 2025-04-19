@@ -17,9 +17,9 @@ export default function LoginPage() {
 
     const request = { userName, password };
 
-    const success = await login(request);
+    const response = await login(request);
 
-    if (success) {
+    if (response) {
       router.push("/tasks");
     } else {
       setError("Invalid username or password");

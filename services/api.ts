@@ -1,5 +1,6 @@
 import httpClient from '@/utils/httpClient';
 import {  Sort, Status } from '../types';
+import { UserLoginResponse } from '@/context/AuthContext';
 
 export interface SignInRequest {
   userName: string;
@@ -26,8 +27,8 @@ export interface ModifyTaskStatusRequest {
 }
 
 // Auth functions
-export const login = async (request: SignInRequest) => {
-  const response = await httpClient.post("/users/signin", request)
+export const login = async (request: SignInRequest) : Promise<UserLoginResponse> => {
+  const response: UserLoginResponse = await httpClient.post("/users/signin", request)
   return response;
 };
 

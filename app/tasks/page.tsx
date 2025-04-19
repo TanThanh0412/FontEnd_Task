@@ -148,7 +148,7 @@ export default function TasksPage() {
 
   useEffect(() => {
     const currentUser = localStorage.getItem("authToken");
-    if (!currentUser) {
+    if (!currentUser && currentUser !== "undefined") {
       router.push("/login");
       return;
     }

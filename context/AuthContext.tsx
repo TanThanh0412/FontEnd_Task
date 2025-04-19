@@ -1,7 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
-import { User } from "../types";
+import { createContext, useContext, ReactNode } from "react";
 import {
   login as apiLogin,
   register as apiRegister,
@@ -10,23 +9,28 @@ import {
 } from "../services/api";
 
 interface AuthContextType {
-  user: User | null;
   login: (request: SignInRequest) => Promise<boolean>;
   register: (request: RegisterRequest) => Promise<boolean>;
+}
+
+export interface UserLoginResponse {
+  data: string;
+  isSuccess: boolean;
+  message: string;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState(null);
+  //const [user, setUser] = useState(null);
 
   const handleLogin = async (request: SignInRequest) => {
-    const loggedInUser = await apiLogin(request);
-    if (loggedInUser) {
+    const loggedInUser: UserLoginResponse = await apiLogin(request);
+    if (loggedInUser.isSuccess) {
       localStorage.setItem("authToken", loggedInUser.data);
-      setUser(loggedInUser.data);
       return true;
     }
+
     return false;
   };
 
@@ -43,7 +47,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   return (
     <AuthContext.Provider
       value={{
-        user,
         login: handleLogin,
         register: handleRegister,
       }}
